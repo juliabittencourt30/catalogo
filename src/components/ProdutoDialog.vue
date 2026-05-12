@@ -5,7 +5,7 @@
     import { formataPreco } from '@/utils/produtoUtils';
     const novopreco = ref(0)
     novopreco.value = props.preco
-    defineEmits(['fechar'])
+    defineEmits(['fechar', 'corrigirpreco'])
 </script>
 
 <template>
@@ -15,7 +15,7 @@
         <p>Preço: {{ formataPreco(preco) }}</p>
         <p>Categoria: {{ categoria }}</p>
         <input type="number" v-model.number="novopreco" />
-        <ButtonChild>Corrigir Preço</ButtonChild>
+        <ButtonChild @clique="$emit('corrigirpreco')">Corrigir Preço</ButtonChild>
         <ButtonChild @clique="$emit('fechar')">Fechar</ButtonChild>
     </div>
     </div>
