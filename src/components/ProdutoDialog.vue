@@ -1,7 +1,11 @@
 <script setup>
-    defineProps(['nome', 'preco', 'categoria', 'id'])
+    import { ref } from 'vue';
+    const props = defineProps(['nome', 'preco', 'categoria', 'id'])
     import ButtonChild from './ButtonChild.vue';
     import { formataPreco } from '@/utils/produtoUtils';
+    const novopreco = ref(0)
+    novopreco.value = props.preco
+    defineEmits(['fechar'])
 </script>
 
 <template>
@@ -10,9 +14,9 @@
         <h2>{{ nome }}</h2>
         <p>Preço: {{ formataPreco(preco) }}</p>
         <p>Categoria: {{ categoria }}</p>
-        <input type="number" v-model.number="preco" />
+        <input type="number" v-model.number="novopreco" />
         <ButtonChild>Corrigir Preço</ButtonChild>
-        <ButtonChild>Fechar</ButtonChild>
+        <ButtonChild @clique="$emit('fechar')">Fechar</ButtonChild>
     </div>
     </div>
 </template>
@@ -20,8 +24,10 @@
 <style scoped>
 .produto-dialog{
     border: 1px solid #ccc;
-    padding: 16px;
-    margin-top: 16px;
+    border-radius: 8px;
+    padding: 24px;
+    background-color: white;
+    min-width: 320px;
 }
 .overlay{
     position: fixed;

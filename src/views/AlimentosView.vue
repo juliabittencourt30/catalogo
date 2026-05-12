@@ -1,5 +1,5 @@
 <script setup>
-    import { ref } from 'vue'
+    import { ref } from 'vue';
     import { listaProdutos } from '@/data/produtos';
     import ProdutoCard from '@/components/ProdutoCard.vue'
     const produtos = ref(listaProdutos)
