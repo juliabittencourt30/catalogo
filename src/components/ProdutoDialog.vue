@@ -1,11 +1,18 @@
 <script setup>
     import { ref } from 'vue';
+    import { listaProdutos } from '@/data/produtos';
     const props = defineProps(['nome', 'preco', 'categoria', 'id'])
     import ButtonChild from './ButtonChild.vue';
     import { formataPreco } from '@/utils/produtoUtils';
     const novopreco = ref(0)
     novopreco.value = props.preco
-    defineEmits(['fechar', 'corrigirpreco'])
+    const emit = defineEmits(['fechar'])
+    function atualizaPreco() {
+        const produtos = ref (listaProdutos);
+        const posicao = produtos.value.findIndex(p => p.id === props.id);
+        produtos.value[posicao].preco = novopreco.value
+        emit('fechar');
+    }
 </script>
 
 <template>
@@ -15,7 +22,7 @@
         <p>Preço: {{ formataPreco(preco) }}</p>
         <p>Categoria: {{ categoria }}</p>
         <input type="number" v-model.number="novopreco" />
-        <ButtonChild @clique="$emit('corrigirpreco')">Corrigir Preço</ButtonChild>
+        <ButtonChild @clique="atualizaPreco">Corrigir Preço</ButtonChild>
         <ButtonChild @clique="$emit('fechar')">Fechar</ButtonChild>
     </div>
     </div>
